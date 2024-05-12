@@ -1,6 +1,6 @@
 import { createContactSchema, updateContactSchema } from "../schemas/contactsSchemas.js";
 import {getContactById,removeContact,listContacts,addContact,updata} from "../services/contactsServices.js";
-
+import validateBody from "../helpers/validateBody.js";
 
 export const getAllContacts = (req, res) => {
     listContacts(then(contact => {res.status(200).json(contact)}))
@@ -9,9 +9,11 @@ export const getAllContacts = (req, res) => {
 export const getOneContact = (req, res) => {
     getContactById(res.params.id)
     .then((contact)=> {
-        contact ? 
-        res.status(200).json(contact)
-        : res.status(404).json({ message: "Not found" });
+        if(contact ){
+            res.status(200).json(contact)
+        } else{
+            res.status(404).json({ message: "Not found" });
+        }
     })
     .catch(error => {
         console.error("Error:",error)
@@ -21,9 +23,11 @@ export const getOneContact = (req, res) => {
 export const deleteContact = (req, res) => {
     removeContact(res.params.id)
     .then((contact)=> {
-        contact ? 
-        res.status(200).json(contact)
-        : res.status(404).json({ message: "Not found" });
+        if(contact ){
+            res.status(200).json(contact)
+        } else{
+            res.status(404).json({ message: "Not found" });
+        }
     })
     .catch(error => { 
         console.error("Error:",error)
@@ -59,18 +63,21 @@ export const updateContact = (req, res) => {
           .json({ message: "Body must have at least one field" });
       }
 
-      const { error } = updateContactSchema.validate(updatedData);
+      const { error } = updateContactSchema.validate(updateData);
       if (error) {
           return res.status(400).json({message: error.message})
       }
 
       updata(id,updateData)
      .then((contact)=> { 
-        contact ? 
-        res.status(200).json(contact)
-        : res.status(404).json({ message: "Not found" });
+        if(contact ){
+            res.status(200).json(contact)
+        } else{
+            res.status(404).json({ message: "Not found" });
+        }
       }).catch(error => {console.log("error", error)})
      };
+
 
       
 

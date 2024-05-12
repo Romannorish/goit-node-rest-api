@@ -21,6 +21,6 @@ app.use((err, req, res, next) => {
   res.status(status).json({ message });
 });
 
-app.listen(1807, () => {
-  console.log("Server is running. Use our API on port: 1807");
+app.listen(9005, () => {
+  console.log("Server is running. Use our API on port: 9005");
 });
