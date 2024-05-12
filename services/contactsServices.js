@@ -1,8 +1,8 @@
-import { nanoid } from "nanoid";
+
 import * as fs from "node:fs/promises"
 
 import path from "node:path"
-
+import crypto from 'crypto';
 
 const contactsPath = path.resolve("db", "contacts.json")
 
@@ -61,7 +61,7 @@ return JSON.parse(data)
     const contacts = await listContacts()
 
     const newContact = {
-        id: nanoid(),
+        id: crypto.randomUUID(),
         name: name,
         email: email,
         phone: phone,
@@ -75,7 +75,7 @@ return JSON.parse(data)
     return newContact
   }
 
-  async function updata(id, upData){
+async function updata(id, upData){
 const contacts = await readContacts()
 
 const index = contacts.findIndex((contact) => contact.id === id)
