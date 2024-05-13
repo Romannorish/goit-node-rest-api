@@ -75,7 +75,7 @@ return JSON.parse(data)
     return newContact
   }
 
-async function updata(id, upData){
+async function updataContact(id, upData){
 const contacts = await readContacts()
 
 const index = contacts.findIndex((contact) => contact.id === id)
@@ -98,5 +98,5 @@ return updateContact
     getContactById,
     removeContact,
     addContact,
-    updata
+    updataContact
   }
