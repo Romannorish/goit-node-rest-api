@@ -56,7 +56,7 @@ return JSON.parse(data)
  
 }
   
-  async function addContact(name, email, phone) {
+  async function addContact({name, email, phone}) {
     // ...твій код. Повертає об'єкт доданого контакту (з id).
     const contacts = await listContacts()
 
