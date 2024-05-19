@@ -4,8 +4,8 @@ import {Contact} from "../schemas/contactsSchemas.js";
 
 const getAllContacts = async (req, res, next) => {
   try {
-    const resp = await Contact.find()
-    res.json(resp)
+    const response = await Contact.find()
+    res.json(response)
   } catch (error) {
     next(error)
   }
@@ -16,10 +16,10 @@ const getOneContact = async (req, res, next) => {
 
   try {
     const resp = await Contact.findById(id)
-    if (!resp) {
+    if (!response) {
       throw HttpError(404, "Not Found")
     }
-    res.json(resp)
+    res.json(response)
   } catch (error) {
     next(error)
   }
@@ -30,10 +30,10 @@ const deleteContact = async (req, res, next) => {
 
   try {
       const resp = await Contact.findByIdAndDelete(id)
-      if (!resp) {
+      if (!response) {
         throw HttpError(404, "Not Found")
       }
-      res.json(resp)
+      res.json(response)
   } catch (error) {
     next(error)
 }
@@ -48,8 +48,8 @@ const createContact = async (req, res, next) => {
   }
 
   try {
-    const resp = await Contact.create(contact);
-    res.status(201).json(resp)
+    const response = await Contact.create(contact);
+    res.status(201).json(response)
   } catch (error) {
     next(error)
   }
@@ -66,8 +66,8 @@ const updateContact = async (req, res, next) => {
   };
 
   try {
-    const resp = await Contact.findByIdAndUpdate(id, contact, { new: true });
-    if (!resp) {
+    const response = await Contact.findByIdAndUpdate(id, contact, { new: true });
+    if (!response) {
       throw HttpError(404, "Not Found")
     }
 
@@ -75,7 +75,7 @@ const updateContact = async (req, res, next) => {
       throw HttpError(400, "Body must have at least one field")
     }
 
-    res.json(resp)
+    res.json(response)
   } catch (error) {
     next(error)
   }
@@ -86,12 +86,12 @@ const updateStatusContact = async (req, res, next) => {
 
   try {
     const {favorite} = req.body
-    const resp = await Contact.findOneAndUpdate({_id: id}, {favorite}, {new: true})
-    if (!resp) {
+    const response = await Contact.findOneAndUpdate({_id: id}, {favorite}, {new: true})
+    if (!response) {
       throw HttpError(404, "Not Found")
     }
 
-    res.json(resp)
+    res.json(response)
   } catch (error) {
     next(error)
   }
