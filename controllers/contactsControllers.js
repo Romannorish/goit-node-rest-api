@@ -15,7 +15,7 @@ const getOneContact = async (req, res, next) => {
   const {id} = req.params;
 
   try {
-    const resp = await Contact.findById(id)
+    const response = await Contact.findById(id)
     if (!response) {
       throw HttpError(404, "Not Found")
     }
@@ -29,7 +29,7 @@ const deleteContact = async (req, res, next) => {
   const {id} = req.params
 
   try {
-      const resp = await Contact.findByIdAndDelete(id)
+      const response = await Contact.findByIdAndDelete(id)
       if (!response) {
         throw HttpError(404, "Not Found")
       }
