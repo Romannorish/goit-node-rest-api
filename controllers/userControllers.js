@@ -48,6 +48,15 @@ const login = async (req, res, next) => {
     }
 }
 
+const getCurrentUser = async (req, res, next) => {
+    try {
+        const user = await User.findById(req.user.id)
+        res.json({email: user.email, subscription: user.subscription})
+    } catch (error) {
+        next(error)
+    }
+}
+
 const logout = async (req, res, next) => {
     try {
         await User.findByIdAndUpdate(req.user.id, {token: null}, {new: true})
@@ -59,4 +68,23 @@ const logout = async (req, res, next) => {
     }
 }
 
-export { register, login, logout }
+const updateSub = async (req, res, next) => {
+    try {
+        if (Object.keys(req.body).length !== 1 || Object.keys(req.body)[0] !== "subscription") {
+            return next(HttpError(400, "Body must have one field: subscription"))
+        }
+
+        const {subscription: updateSub} = req.body
+        const data = await User.findByIdAndUpdate(
+            req.user.id,
+            {subscription: updateSub},
+            {new: true}
+        )
+
+        res.status(200).json(data)
+    } catch (error) {
+        next(error)
+    }
+}
+
+export { register, login, logout ,getCurrentUser, updateSub}
