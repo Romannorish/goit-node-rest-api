@@ -27,7 +27,7 @@ const {URI, PORT} = process.env
 
 mongoose.set('strictQuery', true)
 
-mongoose.connect(URI).then(() => {app.listen(PORT, () => {
+mongoose.connect(URI).then(() => {app.listen(PORT || 3000, () => {
   console.log("Database connection successful")
 })}).catch(error => {console.log(error.message)
   process.exit(1)
