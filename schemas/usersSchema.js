@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import Joi from "joi";
 
 export const registerSchema = Joi.object({
-  name: Joi.string().min(3).required(),
+  name: Joi.string().min(3),
   email: Joi.string().email().required(),
   password: Joi.string().min(8).required(),
   subscription: Joi.string().valid("starter", "pro", "business")
@@ -32,6 +32,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       enum: ["starter", "pro", "business"],
       default: "starter",
+    },
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "users",
     },
     token: {
       type: String,
