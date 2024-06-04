@@ -31,7 +31,10 @@ function auth(req, res, next) {
             }
 
             req.user = {id: decode.id, name: decode.name}
-
+             
+            // if (user.owner.toString() !== req.use.id){
+            //     return res.status(403).send({message: "user is not allowed"})
+            // }
             next()
         } catch (error) {
             next(error)
