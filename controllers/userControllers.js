@@ -50,7 +50,7 @@ const login = async (req, res, next) => {
 
 const getCurrentUser = async (req, res, next) => {
     try {
-        const user = await User.findById(req.user.id)
+        const user = await User.findById( req.user.id)
         res.json({email: user.email, subscription: user.subscription})
     } catch (error) {
         next(error)

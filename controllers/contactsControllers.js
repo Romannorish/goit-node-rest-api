@@ -4,7 +4,7 @@ import {Contact} from "../schemas/contactsSchemas.js";
 
 const getAllContacts = async (req, res, next) => {
   try {
-    const response = await Contact.find()
+    const response = await Contact.find({owner: req.user.id})
     res.json(response)
   } catch (error) {
     next(error)
@@ -15,7 +15,7 @@ const getOneContact = async (req, res, next) => {
   const {id} = req.params;
 
   try {
-    const response = await Contact.findById(id)
+    const response = await Contact.findById({_id: id, owner: req.user.id})
     if (!response) {
       throw HttpError(404, "Not Found")
     }
@@ -29,7 +29,7 @@ const deleteContact = async (req, res, next) => {
   const {id} = req.params
 
   try {
-      const response = await Contact.findByIdAndDelete(id)
+      const response = await Contact.findByIdAndDelete({_id: id, owner: req.user.id})
       if (!response) {
         throw HttpError(404, "Not Found")
       }
@@ -47,8 +47,10 @@ const createContact = async (req, res, next) => {
     favorite: req.body.favorite
   }
 
+  const owner = req.user.id;
+
   try {
-    const response = await Contact.create(contact);
+    const response = await Contact.create({...req.body, owner});
     res.status(201).json(response)
   } catch (error) {
     next(error)
@@ -66,7 +68,7 @@ const updateContact = async (req, res, next) => {
   };
 
   try {
-    const response = await Contact.findByIdAndUpdate(id, contact, { new: true });
+    const response = await Contact.findByIdAndUpdate({_id: id, owner: req.user.id}, contact, { new: true });
     if (!response) {
       throw HttpError(404, "Not Found")
     }
