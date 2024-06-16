@@ -21,6 +21,9 @@ export const updateFavorite = Joi.object({
   phone: Joi.string().min(8),
   favorite: Joi.boolean().required(),
 });
+export const emailSchema = Joi.object({
+  email: Joi.string().email().required()
+})
 
 const contactSchema = new mongoose.Schema({
   name: {
